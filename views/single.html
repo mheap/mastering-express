@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% if media %}
+<img id="{{media.id}}" src="{{media.images.standard_resolution.url}}" width="250" />
+<ul id="comments"></ul>
+<form action="" method="POST">
+    <textarea id="m"></textarea>
+    <input type="submit" />
+</form>
+
+{% else %}
+<p>Sorry, we couldn't find that ID</p>
+{% endif %}
+{% endblock %}
+
+{% block js %}
+<script>
+    var id = $("img").attr("id");
+    socket.on("new-comment-" + id, function(msg) {
+        $("#comments").append(
+            $("<li>", {
+                "text": msg.content
+            })
+        );
+    });
+
+    $("form").submit(function(){
+        socket.emit("add-comment", {"id": id, "content": $("#m").val() })
+        $("#m").val("");
+        return false;
+    });
+</script>
+{% endblock %}

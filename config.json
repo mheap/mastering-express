@@ -1,0 +1,10 @@
+{
+    "http": {
+        "port": 8000
+    },
+    "database": {
+        "username": "root",
+        "password": "",
+        "database": "masteringexpress"
+    }
+}

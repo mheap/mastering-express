@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<form id="username-form">
+    <label for="username">Username:</label><input type="text" id="username" />
+</form>
+
+<div id="chat">
+    <ul></ul>
+    <form id="chat-form">
+    <label for="chat-to">To:</label><input type="text" id="chat-to" />
+    Message:
+    <textarea id="chat-content"></textarea>
+    <input type="submit" />
+    </form>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    var my_username = null;
+
+    var $u = $("#username");
+    $("#username-form").on("submit", function(){
+        socket.emit("add-user", {"username": $u.val()});
+        $(this).hide();
+        my_username = $u.val();
+        return false;
+        });
+
+    $("#chat-form").on("submit", function(){
+        socket.emit("send-message", {
+            "username": $("#chat-to").val(),
+            "from": my_username,
+            "content": $("#chat-content").val()
+        });
+        $("#chat-to, #chat-content").val("");
+        return false;
+        });
+
+        socket.on("new-message", function(msg){
+            var private_warning = "";
+            if (msg.username != "__public__") {
+                private_warning = "[Private] ";
+            }
+
+            $("#chat ul").append(
+                $("<li>", {
+                    "text": private_warning + msg.from + ": " + msg.content
+                })
+            );
+        });
+
+
+</script>
+{% endblock %}

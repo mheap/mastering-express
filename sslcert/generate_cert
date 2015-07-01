@@ -1,0 +1,5 @@
+#!/bin/bash
+
+openssl genrsa -out masteringexpress-key.pem 4096
+openssl req -new -key masteringexpress-key.pem -out certrequest.csr
+openssl x509 -req -in certrequest.csr -signkey masteringexpress-key.pem -out masteringexpress-cert.pem

@@ -1,0 +1,12 @@
+{% block content %}
+{% if greeting %}
+{{greeting}} Michael!
+{% endif %}
+
+<form action="/popular/form" method="post">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    <input type="text" name="greeting" />
+    <input type="submit" value="Send" />
+</form>
+{% endblock %}

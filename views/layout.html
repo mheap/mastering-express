@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <title>Mastering Express Application Development</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/style.css" />
+</head>
+<body>
+{% block content %}
+{% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();
+</script>
+
+{% block js %}
+{% endblock %}
+
+</body>
+</html>
+
